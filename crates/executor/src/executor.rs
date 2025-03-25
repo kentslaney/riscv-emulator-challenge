@@ -308,7 +308,7 @@ impl<'a> Executor<'a> {
     /// Get the current value of a byte.
     #[must_use]
     pub fn byte(&mut self, addr: u32) -> u8 {
-        let word = self.word(addr - addr % 4);
+        let word = self.word(addr & 0xFFFF_FFFC);
         (word >> ((addr % 4) * 8)) as u8
     }
 
