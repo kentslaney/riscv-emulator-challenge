@@ -448,6 +448,8 @@ impl<'a> Executor<'a> {
                 .memory_diff
                 .entry(addr)
                 .or_insert(record.copied());
+            // TODO: why is this unconditional as opposed to a few lines down where a simple memory
+            // access and compare are behind a callback?
         }
 
         // If it's the first time accessing this address, initialize previous values.
