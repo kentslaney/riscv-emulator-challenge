@@ -2,7 +2,7 @@ use num::BigUint;
 
 pub fn biguint_to_bits_le(integer: &BigUint, num_bits: usize) -> Vec<bool> {
     let byte_vec = integer.to_bytes_le();
-    let mut bits = Vec::new();
+    let mut bits = Vec::with_capacity(num_bits);
     for byte in byte_vec {
         for i in 0..8 {
             bits.push(byte & (1 << i) != 0);
