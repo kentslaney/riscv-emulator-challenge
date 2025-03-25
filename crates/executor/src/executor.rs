@@ -228,7 +228,7 @@ impl<'a> Executor<'a> {
     pub fn registers(&mut self) -> [u32; 32] {
         let mut registers = [0; 32];
         for i in 0..32 {
-            let addr = Register::from_u32(i as u32) as u32;
+            let addr = Register::from_u32(i as u32) as u32; // ?
             let record = self.state.memory.get(&addr);
 
             // Only add the previous memory state to checkpoint map if we're in checkpoint mode,
@@ -690,7 +690,7 @@ impl<'a> Executor<'a> {
             Opcode::LB => {
                 (rd, _, _, addr, memory_read_value) = self.load_rr(instruction);
                 let value = (memory_read_value).to_le_bytes()[(addr % 4) as usize];
-                a = ((value as i8) as i32) as u32;
+                a = ((value as i8) as i32) as u32; // ?
                 self.rw(rd, a);
             }
             Opcode::LH => {
@@ -703,7 +703,7 @@ impl<'a> Executor<'a> {
                     1 => (memory_read_value & 0xFFFF_0000) >> 16,
                     _ => unreachable!(),
                 };
-                a = ((value as i16) as i32) as u32;
+                a = ((value as i16) as i32) as u32; // ?
                 self.rw(rd, a);
             }
             Opcode::LW => {
@@ -730,7 +730,7 @@ impl<'a> Executor<'a> {
                     1 => (memory_read_value & 0xFFFF_0000) >> 16,
                     _ => unreachable!(),
                 };
-                a = (value as u16) as u32;
+                a = (value as u16) as u32; // ?
                 self.rw(rd, a);
             }
 
@@ -913,7 +913,7 @@ impl<'a> Executor<'a> {
             }
             Opcode::MULH => {
                 (rd, b, c) = self.alu_rr(instruction);
-                a = (((b as i32) as i64).wrapping_mul((c as i32) as i64) >> 32) as u32;
+                a = (((b as i32) as i64).wrapping_mul((c as i32) as i64) >> 32) as u32; // ?
                 self.alu_rw(instruction, rd, a, b, c, lookup_id);
             }
             Opcode::MULHU => {
@@ -923,7 +923,7 @@ impl<'a> Executor<'a> {
             }
             Opcode::MULHSU => {
                 (rd, b, c) = self.alu_rr(instruction);
-                a = (((b as i32) as i64).wrapping_mul(c as i64) >> 32) as u32;
+                a = (((b as i32) as i64).wrapping_mul(c as i64) >> 32) as u32; //?
                 self.alu_rw(instruction, rd, a, b, c, lookup_id);
             }
             Opcode::DIV => {
